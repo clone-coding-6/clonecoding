@@ -24,12 +24,24 @@ dependencies {
     //security
     implementation 'org.springframework.boot:spring-boot-starter-security'
 
+    //socket 통신
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    implementation 'org.webjars:sockjs-client:1.5.1'
+    //stomp
+    implementation 'org.webjars:stomp-websocket:2.3.4'
+
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'mysql:mysql-connector-java'
+    //lombok
+    compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+    //redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    //embedded redis
+    compileOnly group: 'it.ozimov', name: 'embedded-redis', version: '0.7.2'
     //jwt
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
     // aws
