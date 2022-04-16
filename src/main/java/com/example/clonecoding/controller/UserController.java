@@ -1,5 +1,7 @@
 package com.example.clonecoding.controller;
 
+
+
 import com.example.clonecoding.dto.SignUpRequestDto;
 import com.example.clonecoding.dto.UserRequestDto;
 import com.example.clonecoding.exception.ErrorCode;
@@ -37,7 +39,7 @@ public class UserController {
         Map<String, String> result = new HashMap<>();
         result.put("result", "success");
         result.put("id", String.valueOf(user.getId()));
-        result.put("userId", user.getUserId());
+        result.put("userId", user.getNickname());
         result.put("nickname", user.getNickname());
 
         return result;
@@ -50,8 +52,8 @@ public class UserController {
         User user = userService.login(requestDto);
 
         Map<String,String> result =new HashMap<>();
-        result.put("token",jwtTokenProvider.createToken(user.getUserId(), user.getUserId(), user.getNickname())); // "username" : {username}
-        result.put("userId", user.getUserId());
+//        result.put("token",jwtTokenProvider.createToken(user.getUserId(), user.getUserId(), user.getNickname())); // "username" : {username}
+//        result.put("userId", user.getUserId());
         result.put("id", String.valueOf(user.getId()));
         result.put("nickname", user.getNickname());
         result.put("result", "success");
@@ -76,7 +78,7 @@ public class UserController {
             throw new HanghaeMiniException(ErrorCode.LOGIN_TOKEN_EXPIRE);
         }
         Map<String, String> result = new HashMap<>();
-        result.put("email", userDetails.getUser().getUserId());
+//        result.put("email", userDetails.getUser().getUserId());
         result.put("nickname", userDetails.getUser().getNickname());
         result.put("result", "success");
 

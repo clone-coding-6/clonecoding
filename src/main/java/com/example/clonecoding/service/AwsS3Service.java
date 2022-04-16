@@ -7,6 +7,7 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,13 +21,21 @@ import java.util.Map;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
 public class AwsS3Service {
 
     @Value("mohabucket123")
     private String bucket;
 
+
     private final AmazonS3 amazonS3;
+
+    public AwsS3Service(AmazonS3 amazonS3) {
+        this.amazonS3 = amazonS3;
+    }
+
+
+
+
     @Transactional
     public Map<String, String> uploadFile(MultipartFile multipartFile) {
 
