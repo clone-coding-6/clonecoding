@@ -147,10 +147,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // 회원 관리 API 허용
         skipPathList.add("GET,/user/**");
         skipPathList.add("POST,/user/**");
+        skipPathList.add("PUT,/user/**"); // 회원 정보 수정용
         skipPathList.add("GET,/oauth/**");
 
-        skipPathList.add("GET,/image/**");
-        skipPathList.add("GET,/");
+//        skipPathList.add("GET,/image/**");
+//        skipPathList.add("GET,/");
 
 
         FilterSkipMatcher matcher = new FilterSkipMatcher(

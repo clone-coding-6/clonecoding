@@ -1,5 +1,6 @@
 package com.example.clonecoding.model;
 
+import com.example.clonecoding.dto.UserInfoRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -41,5 +42,10 @@ public class User {
 
     public User(String username){
         this.email = username;
+    }
+
+    // 회원 정보 수정
+    public void updateUser(UserInfoRequestDto userInfoRequestDto){
+        this.nickname = userInfoRequestDto.getNickname();
     }
 }
