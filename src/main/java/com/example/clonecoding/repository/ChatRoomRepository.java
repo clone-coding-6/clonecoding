@@ -1,6 +1,6 @@
 package com.example.clonecoding.repository;
 
-import com.example.clonecoding.dto.ChatRoomDto;
+import com.example.clonecoding.model.ChatRoom;
 import com.example.clonecoding.subpub.RedisSubscriber;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.HashOperations;
@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 @RequiredArgsConstructor
 @Repository
 public class ChatRoomRepository {
@@ -24,7 +25,7 @@ public class ChatRoomRepository {
     // Redis
     private static final String CHAT_ROOMS = "CHAT_ROOM";
     private final RedisTemplate<String, Object> redisTemplate;
-    private HashOperations<String, String, ChatRoomDto> opsHashChatRoom;
+    private HashOperations<String, String, ChatRoom> opsHashChatRoom;
     // 채팅방의 대화 메시지를 발행하기 위한 redis topic 정보. 서버별로 채팅방에 매치되는 topic정보를 Map에 넣어 roomId로 찾을수 있도록 한다.
     private Map<String, ChannelTopic> topics;
 
@@ -34,34 +35,38 @@ public class ChatRoomRepository {
         topics = new HashMap<>();
     }
 
-    public List<ChatRoomDto> findAllRoom() {
+    public List<ChatRoom> findAllRoom() {
         return opsHashChatRoom.values(CHAT_ROOMS);
     }
 
-    public ChatRoomDto findRoomById(String id) {
+    public ChatRoom findRoomById(String id) {
         return opsHashChatRoom.get(CHAT_ROOMS, id);
     }
 
-
     //채팅방 생성 : 서버간 채팅방 공유를 위해 redis hash에 저장한다.
-    public ChatRoomDto createChatRoom(String name) {
-        ChatRoomDto chatRoomDto = ChatRoomDto.create(name);
-        opsHashChatRoom.put(CHAT_ROOMS, chatRoomDto.getRoomId(), chatRoomDto);
-        return chatRoomDto;
+    //채팅방 이름 , 채팅방의 uuid주소 , 채팅방을 레디스에 저장
+    public void createChatRoom(ChatRoom chatRoom) {
+        opsHashChatRoom.put(CHAT_ROOMS, chatRoom.getRoomId(), chatRoom);
     }
-
 
     //채팅방 입장 : redis에 topic을 만들고 pub/sub 통신을 하기 위해 리스너를 설정한다.
     public void enterChatRoom(String roomId) {
+        //roomid = ENTER 요청으로 들어온 roomid(방 입장시 roomid)
+        // topic은 채팅방을 의미
+        // ENTER 요청으로 들어온 roomid로 방을 입장./
         ChannelTopic topic = topics.get(roomId);
+
         if (topic == null) {
             topic = new ChannelTopic(roomId);
             redisMessageListener.addMessageListener(redisSubscriber, topic);
             topics.put(roomId, topic);
         }
     }
-
     public ChannelTopic getTopic(String roomId) {
         return topics.get(roomId);
+    }
+
+    public void deleteChatRoom(String roomId) {
+        opsHashChatRoom.delete(CHAT_ROOMS , roomId);
     }
 }

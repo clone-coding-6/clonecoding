@@ -42,3 +42,4 @@ secrets.yml
 .sts4-cache
 .yml
 src/main/java/com/example/clonecoding/config/AwsS3Config.java
+src/main/resources

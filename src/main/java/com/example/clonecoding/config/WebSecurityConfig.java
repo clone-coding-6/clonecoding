@@ -68,7 +68,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web
                 .ignoring()
                 .antMatchers("/h2-console/**")
-                .antMatchers("/auth/**");
+                .antMatchers("/auth/**")
+                .antMatchers("/css/**")
+                .antMatchers("/script/**");
+        //chat test 템플릿 허용 배포시 삭제할 것
     }
 
     @Override
@@ -78,8 +81,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll() // preflight 대응
-                .antMatchers("/auth/**").permitAll(); // /auth/**에 대한 접근을 인증 절차 없이 허용(로그인 관련 url)
-                // 특정 권한을 가진 사용자만 접근을 허용해야 할 경우, 하기 항목을 통해 가능
+                .antMatchers("/auth/**").permitAll() // /auth/**에 대한 접근을 인증 절차 없이 허용(로그인 관련 url)
+                .antMatchers("/chat/**").permitAll();
+        // 특정 권한을 가진 사용자만 접근을 허용해야 할 경우, 하기 항목을 통해 가능
                 //.antMatchers("/admin/**").hasAnyRole("ADMIN"
 
 
@@ -122,6 +126,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll();
     }
 
+
     @Bean
     public FormLoginFilter formLoginFilter() throws Exception {
         FormLoginFilter formLoginFilter = new FormLoginFilter(authenticationManager());
@@ -150,8 +155,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         skipPathList.add("PUT,/user/**"); // 회원 정보 수정용
         skipPathList.add("GET,/oauth/**");
 
-//        skipPathList.add("GET,/image/**");
-//        skipPathList.add("GET,/");
+        //Chat Test Templates 허용
+        skipPathList.add("GET,/chat/**");
+        skipPathList.add("POST,/chat/**");
+        skipPathList.add("GET,/chat/**");
+        skipPathList.add("POST,/chat/**");
 
 
         FilterSkipMatcher matcher = new FilterSkipMatcher(

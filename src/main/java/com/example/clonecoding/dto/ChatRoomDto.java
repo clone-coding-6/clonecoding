@@ -1,26 +1,29 @@
 package com.example.clonecoding.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.example.clonecoding.model.MessageType;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 
-import java.io.Serializable;
-import java.util.UUID;
+public class ChatRoomDto {
 
-@Getter
-@Setter
-public class ChatRoomDto implements Serializable {
+    @AllArgsConstructor
+    @Builder
+    @Data
+    public static class RoomJoinRequestDto{
+        MessageType type;
 
-    private static final long serialVersionUID = 6494678977089006639L;
+        String roomId;
 
-    private String roomId;
-    private String name;
+        String sender;
 
-    public static ChatRoomDto create(String name) {
-        ChatRoomDto chatRoomDto = new ChatRoomDto();
-        chatRoomDto.roomId = UUID.randomUUID().toString();
-        chatRoomDto.name = name;
-        return chatRoomDto;
+        String message;
+    }
+
+    @AllArgsConstructor
+    @Builder
+    @Data
+    public static class RoomDeleteRequestDto{
+        String roomId;
     }
 }
-
-
