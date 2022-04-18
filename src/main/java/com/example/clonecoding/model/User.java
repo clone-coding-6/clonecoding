@@ -31,6 +31,9 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     private UserRoleEnum role;
 
+    @Column
+    private String imageUrl;
+
     @Column(unique = true)
     private Long kakaoId;
 
@@ -57,4 +60,5 @@ public class User {
         this.nickname = signUpRequestDto.getNickname();
         this.kakaoId = null;
     }
+
 }

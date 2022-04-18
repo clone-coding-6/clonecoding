@@ -1,18 +1,21 @@
 package com.example.clonecoding.dto;
 
-import com.example.clonecoding.model.Timestamped;
-import lombok.Getter;
-import lombok.Setter;
+import com.example.clonecoding.model.MessageType;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
-@Setter
-public class ChatMessageDto extends Timestamped {
-    // 메시지 타입 : 입장, 채팅
-    public enum MessageType {
-        ENTER, JOIN, TALK
+public class ChatMessageDto {
+
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    @Data
+    public static class Request{
+        MessageType type; // 메시지 타입
+        String roomId; // 방번호
+        String sender; // 메시지 보낸사람
+        String message; // 메시지
     }
-    private MessageType type; // 메시지 타입
-    private String roomId; // 방번호
-    private String sender; // 메시지 보낸사람
-    private String message; // 메시지
 }
