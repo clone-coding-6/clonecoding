@@ -1,6 +1,5 @@
 package com.example.clonecoding.model;
 
-import com.example.clonecoding.dto.SignUpRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,37 +23,23 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Column(unique = true)
+    @Column(nullable = false)
     private String nickname;
-
-    @Column(nullable = true)
-    @Enumerated(value = EnumType.STRING)
-    private UserRoleEnum role;
 
     @Column(unique = true)
     private Long kakaoId;
 
+    @Column
+    private String imageUrl;
 
-    public User(String email, String password, String nickname, UserRoleEnum role, Long kakaoId) {
-        this.email = email;
-        this.password = password;
+    public User(String username, String nickname, String enPassword, String imageUrl) {
+        this.email = username;
         this.nickname = nickname;
-        this.role = role;
-        this.kakaoId = kakaoId;
+        this.password = enPassword;
+        this.imageUrl = imageUrl;
     }
 
-    public User(String email, String password, String nickname, UserRoleEnum role) {
-        this.email = email;
-        this.password = password;
-        this.nickname = nickname;
-        this.role = role;
-        this.kakaoId = null;
-    }
-
-    public User(SignUpRequestDto signUpRequestDto) {
-        this.email = signUpRequestDto.getEmail();
-        this.password = signUpRequestDto.getPassword();
-        this.nickname = signUpRequestDto.getNickname();
-        this.kakaoId = null;
+    public User(String username){
+        this.email = username;
     }
 }

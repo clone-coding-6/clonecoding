@@ -1,87 +1,70 @@
 package com.example.clonecoding.controller;
 
-
-
-import com.example.clonecoding.dto.SignUpRequestDto;
-import com.example.clonecoding.dto.UserRequestDto;
-import com.example.clonecoding.exception.ErrorCode;
-import com.example.clonecoding.exception.HanghaeMiniException;
+import com.example.clonecoding.dto.ResultResponseDto;
+import com.example.clonecoding.dto.SignupRequestDto;
+import com.example.clonecoding.dto.UserResponseDto;
 import com.example.clonecoding.model.User;
 import com.example.clonecoding.security.UserDetailsImpl;
-import com.example.clonecoding.security.jwt.JwtTokenProvider;
+import com.example.clonecoding.security.jwt.JwtTokenUtils;
 import com.example.clonecoding.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
+
 @RestController
-public class UserController {
+@RequiredArgsConstructor
+public class
+UserController {
 
     private final UserService userService;
-    private final JwtTokenProvider jwtTokenProvider;
 
-    @Autowired
-    public UserController(UserService userService, JwtTokenProvider jwtTokenProvider){
-        this.userService = userService;
-        this.jwtTokenProvider = jwtTokenProvider;
+    //회원가입
+    @PostMapping("/user/signup")
+    public void registerUser(@RequestBody SignupRequestDto requestDto) {
+        userService.registerUser(requestDto);
     }
 
-    //가입 요청 처리
-    @PostMapping("/api/signup")
-    public Map<String, String> registerUser(@RequestBody SignUpRequestDto requestDto) throws HanghaeMiniException {
-        User user = userService.registerUser(requestDto);
+    // 로그인 확인
+    @PostMapping("/user/login")
+    public Map<String, String> userLogin(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        User user = userDetails.getUser();
         Map<String, String> result = new HashMap<>();
+        String token = JwtTokenUtils.generateJwtToken(userDetails);
+//        System.out.println("email : " + user.getEmail());
+//        System.out.println("nickname : " + user.getNickname());
+        new UserResponseDto(user.getEmail(), user.getNickname());
+        result.put("token", token);
         result.put("result", "success");
-        result.put("id", String.valueOf(user.getId()));
-        result.put("userId", user.getNickname());
-        result.put("nickname", user.getNickname());
-
         return result;
     }
 
-
-    // 로그인
-    @PostMapping("/api/login")
-    public Map<String,String> login(@RequestBody UserRequestDto requestDto) throws HanghaeMiniException {
-        User user = userService.login(requestDto);
-
-        Map<String,String> result =new HashMap<>();
-//        result.put("token",jwtTokenProvider.createToken(user.getUserId(), user.getUserId(), user.getNickname())); // "username" : {username}
-//        result.put("userId", user.getUserId());
-        result.put("id", String.valueOf(user.getId()));
-        result.put("nickname", user.getNickname());
-        result.put("result", "success");
-
-        return result;
+    // 아이디 중복확인
+    @GetMapping("/user/idCheck/{username}")
+    public ResultResponseDto duplicateUsername(@PathVariable("username") String username) {
+        System.out.println("idCheck input username : " + username);
+        System.out.println("idCheck result : " + userService.duplicateUsername(username).isResult());
+        System.out.println("idCheck result reverse : " + userService.duplicateUsername(username));
+        return userService.duplicateUsername(username);
     }
 
-    @PostMapping("/api/idCheck")
-    public Map<String, String> duplicateId(@RequestBody UserRequestDto userRequestDto) {
-        return userService.duplicateId(userRequestDto);
+    // 닉네임 중복확인
+    @GetMapping("/user/nicknameCheck/{nickname}")
+    public ResultResponseDto duplicateNickname(@PathVariable("nickname") String nickname) {
+        System.out.println("nicknameCheck input nickname : " + nickname);
+        System.out.println("nicknameCheck result : " + userService.duplicatecNickname(nickname).isResult());
+        return userService.duplicatecNickname(nickname);
     }
 
-    @PostMapping("/signup/duplicate_nickname")
-    public Map<String, String> duplicateNickname(@RequestBody SignUpRequestDto signUpRequestDto) {
-        return userService.duplicateNickname(signUpRequestDto);
-    }
+    // 회원정보 수정
+
+    // 비밀번호 찾기
 
 
-    @GetMapping("/auth")
-    public Map<String, String> loginCheck(@AuthenticationPrincipal UserDetailsImpl userDetails) throws HanghaeMiniException {
-        if (userDetails == null) {
-            throw new HanghaeMiniException(ErrorCode.LOGIN_TOKEN_EXPIRE);
-        }
-        Map<String, String> result = new HashMap<>();
-//        result.put("email", userDetails.getUser().getUserId());
-        result.put("nickname", userDetails.getUser().getNickname());
-        result.put("result", "success");
-
-        return result;
-    }
 }
+
+
+
