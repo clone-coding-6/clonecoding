@@ -70,7 +70,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/h2-console/**")
                 .antMatchers("/auth/**")
                 .antMatchers("/css/**")
-                .antMatchers("/script/**");
+                .antMatchers("/script/**")
+                .antMatchers("/webjars/**" , "/script/**");
         //chat test 템플릿 허용 배포시 삭제할 것
     }
 
@@ -160,6 +161,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         skipPathList.add("POST,/chat/**");
         skipPathList.add("GET,/chat/**");
         skipPathList.add("POST,/chat/**");
+        skipPathList.add("GET,/ws-stomp/**");
+        skipPathList.add("POST,/ws-stomp/**");
 
 
         FilterSkipMatcher matcher = new FilterSkipMatcher(

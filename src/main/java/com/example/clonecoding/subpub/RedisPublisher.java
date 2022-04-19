@@ -30,6 +30,17 @@ public class RedisPublisher {
 //        );
         log.info(String.valueOf(message));
         ChatRoom chatRoom = chatRoomRepository.findRoomById(message.getRoomId());
+        if(message.getMessage().contains("<")||message.getMessage().contains("script")|| message.getMessage().contains(">") ){
+            ChatMessage chatMessage = ChatMessage.builder()
+                    .roomId(message.getRoomId())
+                    .type(message.getType())
+                    .sender(message.getSender())
+                    .message("xss 방지")
+//                .imageUrl(user.getImageUrl())
+                    .chatRoom(chatRoom)
+                    .build();
+            chatMessageRepository.save(chatMessage);
+        } else{
         ChatMessage chatMessage = ChatMessage.builder()
                 .roomId(message.getRoomId())
                 .type(message.getType())
@@ -38,7 +49,8 @@ public class RedisPublisher {
 //                .imageUrl(user.getImageUrl())
                 .chatRoom(chatRoom)
                 .build();
-        chatMessageRepository.save(chatMessage);
+            chatMessageRepository.save(chatMessage);
+        }
         redisTemplate.convertAndSend(topic.getTopic(), message);
     }
 }

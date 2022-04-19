@@ -16,8 +16,7 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-public class
-UserController {
+public class UserController {
 
     private final UserService userService;
 
