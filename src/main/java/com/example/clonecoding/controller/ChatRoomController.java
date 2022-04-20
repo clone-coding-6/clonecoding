@@ -46,7 +46,7 @@ public class ChatRoomController {
     // 채팅방 생성
     @PostMapping("/createroom")
     @ResponseBody
-    public ChatRoom createRoom(@RequestParam String name){
+    public ChatRoom createRoom(String name) {
         return chatRoomService.createRoom(name);
     }
 
@@ -60,7 +60,7 @@ public class ChatRoomController {
     //채팅방 내역조회
     @GetMapping("/message/{roomid}")
     @ResponseBody
-    public List<ChatMessagedResponseDto> subMessage(@PathVariable String roomid){
+    public List<ChatMessagedResponseDto> subMessage(@PathVariable String roomid) {
         return chatSerivce.subMessage(roomid);
     }
 
@@ -70,7 +70,6 @@ public class ChatRoomController {
     public ChatRoom roomInfo(@PathVariable String roomid) {
         return chatRoomRepository.findRoomById(roomid);
     }
-
 
 
     //    @GetMapping("/room/{roomId}")
