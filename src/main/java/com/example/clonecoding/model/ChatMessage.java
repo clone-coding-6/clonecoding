@@ -19,13 +19,13 @@ public class ChatMessage extends Timestamped {
     @Id
     Long id;
 
-    @Column
+    @Column(nullable = false)
     private MessageType type; // 메시지 타입
 
-    @Column
+    @Column(nullable = false)
     private String roomId; // 방번호
 
-    @Column
+    @Column(nullable = false)
     private String sender; // 메시지 보낸사람
 
     @Column

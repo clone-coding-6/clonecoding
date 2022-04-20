@@ -8,6 +8,7 @@ import com.example.clonecoding.security.filter.JwtAuthFilter;
 import com.example.clonecoding.security.jwt.HeaderTokenExtractor;
 import com.example.clonecoding.security.provider.FormLoginAuthProvider;
 import com.example.clonecoding.security.provider.JWTAuthProvider;
+import org.springframework.boot.autoconfigure.security.reactive.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -69,9 +70,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .ignoring()
                 .antMatchers("/h2-console/**")
                 .antMatchers("/auth/**")
-                .antMatchers("/css/**")
-                .antMatchers("/script/**");
-        //chat test 템플릿 허용 배포시 삭제할 것
+                //chat test 템플릿 허용 배포시 삭제할 것
+                .antMatchers("/webjars/**" , "/script/**")
+                .mvcMatchers("/favicon.ico");
     }
 
     @Override
@@ -158,8 +159,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         //Chat Test Templates 허용
         skipPathList.add("GET,/chat/**");
         skipPathList.add("POST,/chat/**");
-        skipPathList.add("GET,/chat/**");
-        skipPathList.add("POST,/chat/**");
+        skipPathList.add("GET,/ws-stomp/**");
+        skipPathList.add("POST,/ws-stomp/**");
+
 
 
         FilterSkipMatcher matcher = new FilterSkipMatcher(
@@ -181,6 +183,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
+
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
