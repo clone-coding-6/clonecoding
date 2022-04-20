@@ -5,11 +5,14 @@ import com.example.clonecoding.dto.SignupRequestDto;
 import com.example.clonecoding.dto.UserInfoRequestDto;
 import com.example.clonecoding.model.User;
 import com.example.clonecoding.repository.UserRepository;
+import com.example.clonecoding.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Optional;
 
 
 @RequiredArgsConstructor
@@ -49,5 +52,14 @@ public class UserService {
         );
 
         user.updateUser(userInfoRequestDto);
+    }
+    //전체 회원정보 리스트 불러오기
+    public List<User> getUserList() {
+        return userRepository.findAll();
+    }
+
+    // 내 정보 불러오기
+    public List<User> getuser(UserDetailsImpl userDetails) {
+        return userRepository.findByNickname(userDetails.getNickname());
     }
 }

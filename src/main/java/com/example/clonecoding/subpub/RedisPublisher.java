@@ -30,7 +30,7 @@ public class RedisPublisher {
 //        );
         log.info(String.valueOf(message));
         ChatRoom chatRoom = chatRoomRepository.findRoomById(message.getRoomId());
-        if(message.getMessage().contains("<")||message.getMessage().contains("script")|| message.getMessage().contains(">") ){
+        if(message.getMessage().contains("<")||message.getMessage().contains("script")||message.getMessage().contains(">")){
             ChatMessage chatMessage = ChatMessage.builder()
                     .roomId(message.getRoomId())
                     .type(message.getType())
@@ -40,15 +40,15 @@ public class RedisPublisher {
                     .chatRoom(chatRoom)
                     .build();
             chatMessageRepository.save(chatMessage);
-        } else{
-        ChatMessage chatMessage = ChatMessage.builder()
-                .roomId(message.getRoomId())
-                .type(message.getType())
-                .sender(message.getSender())
-                .message(message.getMessage())
+        } else {
+            ChatMessage chatMessage = ChatMessage.builder()
+                    .roomId(message.getRoomId())
+                    .type(message.getType())
+                    .sender(message.getSender())
+                    .message(message.getMessage())
 //                .imageUrl(user.getImageUrl())
-                .chatRoom(chatRoom)
-                .build();
+                    .chatRoom(chatRoom)
+                    .build();
             chatMessageRepository.save(chatMessage);
         }
         redisTemplate.convertAndSend(topic.getTopic(), message);

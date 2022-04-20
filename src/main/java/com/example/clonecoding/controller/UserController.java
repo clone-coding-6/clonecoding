@@ -2,6 +2,7 @@ package com.example.clonecoding.controller;
 
 import com.example.clonecoding.dto.*;
 import com.example.clonecoding.model.User;
+import com.example.clonecoding.repository.UserRepository;
 import com.example.clonecoding.security.UserDetailsImpl;
 import com.example.clonecoding.security.jwt.JwtTokenUtils;
 import com.example.clonecoding.service.UserService;
@@ -11,6 +12,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -67,6 +69,19 @@ public class UserController {
         return new UserInfoResponseDto(true);
     }
     // 비밀번호 찾기
+
+    //전체 회원정보 리스트 불러오기
+    @GetMapping("/userlist")
+    public List<User> getUserList(){
+        return userService.getUserList();
+    }
+
+    // 내 정보 불러오기
+    @GetMapping("/myinfo")
+    public List<User> getuser(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return userService.getuser(userDetails);
+    }
+
 
 
 }
