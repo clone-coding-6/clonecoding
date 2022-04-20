@@ -46,11 +46,8 @@ public class ChatRoomController {
     // 채팅방 생성
     @PostMapping("/createroom")
     @ResponseBody
-<<<<<<< HEAD
-    public ChatRoom createRoom(@RequestParam String name){
-=======
+
     public ChatRoom createRoom(String name) {
->>>>>>> bb1b0a094289d09f80c703abec24d4e696d7aa4f
         return chatRoomService.createRoom(name);
     }
 
@@ -64,11 +61,7 @@ public class ChatRoomController {
     //채팅방 내역조회
     @GetMapping("/message/{roomid}")
     @ResponseBody
-<<<<<<< HEAD
-    public List<ChatMessagedResponseDto> subMessage(@PathVariable String roomid){
-=======
     public List<ChatMessagedResponseDto> subMessage(@PathVariable String roomid) {
->>>>>>> bb1b0a094289d09f80c703abec24d4e696d7aa4f
         return chatSerivce.subMessage(roomid);
     }
 
@@ -78,23 +71,4 @@ public class ChatRoomController {
     public ChatRoom roomInfo(@PathVariable String roomid) {
         return chatRoomRepository.findRoomById(roomid);
     }
-
-
-<<<<<<< HEAD
-
-=======
->>>>>>> bb1b0a094289d09f80c703abec24d4e696d7aa4f
-    //    @GetMapping("/room/{roomId}")
-//    @ResponseBody
-//    public ChatRoom roomInfo(@PathVariable String roomId) {
-//        return chatRoomRepository.findRoomById(roomId);
-//    }
-
-//    //특정 채팅방 삭제
-//    @DeleteMapping("/delete/{roomid}")
-//    public String roomDelete(@PathVariable String roomid) {
-//        chatRoomJPARepository.deleteByRoomId(roomid);
-//        return roomid;
-//    }
-
 }
