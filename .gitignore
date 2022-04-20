@@ -43,3 +43,4 @@ secrets.yml
 .yml
 src/main/java/com/example/clonecoding/config/AwsS3Config.java
 src/main/resources
+src/main/java/com/example/clonecoding/service/AwsS3Service.java
