@@ -5,11 +5,20 @@ import com.example.clonecoding.dto.SignupRequestDto;
 import com.example.clonecoding.dto.UserInfoRequestDto;
 import com.example.clonecoding.model.User;
 import com.example.clonecoding.repository.UserRepository;
+<<<<<<< HEAD
+=======
+import com.example.clonecoding.security.UserDetailsImpl;
+>>>>>>> bb1b0a094289d09f80c703abec24d4e696d7aa4f
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+<<<<<<< HEAD
+=======
+import java.util.List;
+import java.util.Optional;
+>>>>>>> bb1b0a094289d09f80c703abec24d4e696d7aa4f
 
 
 @RequiredArgsConstructor
@@ -50,4 +59,16 @@ public class UserService {
 
         user.updateUser(userInfoRequestDto);
     }
+<<<<<<< HEAD
+=======
+    //전체 회원정보 리스트 불러오기
+    public List<User> getUserList() {
+        return userRepository.findAll();
+    }
+
+    // 내 정보 불러오기
+    public List<User> getuser(UserDetailsImpl userDetails) {
+        return userRepository.findByNickname(userDetails.getNickname());
+    }
+>>>>>>> bb1b0a094289d09f80c703abec24d4e696d7aa4f
 }

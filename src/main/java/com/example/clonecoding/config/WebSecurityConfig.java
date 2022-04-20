@@ -8,6 +8,10 @@ import com.example.clonecoding.security.filter.JwtAuthFilter;
 import com.example.clonecoding.security.jwt.HeaderTokenExtractor;
 import com.example.clonecoding.security.provider.FormLoginAuthProvider;
 import com.example.clonecoding.security.provider.JWTAuthProvider;
+<<<<<<< HEAD
+=======
+import org.springframework.boot.autoconfigure.security.reactive.PathRequest;
+>>>>>>> bb1b0a094289d09f80c703abec24d4e696d7aa4f
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -69,9 +73,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .ignoring()
                 .antMatchers("/h2-console/**")
                 .antMatchers("/auth/**")
+<<<<<<< HEAD
                 .antMatchers("/css/**")
                 .antMatchers("/script/**");
         //chat test 템플릿 허용 배포시 삭제할 것
+=======
+<<<<<<< HEAD
+                .antMatchers("/css/**")
+                .antMatchers("/script/**")
+                .antMatchers("/webjars/**" , "/script/**");
+        //chat test 템플릿 허용 배포시 삭제할 것
+=======
+                //chat test 템플릿 허용 배포시 삭제할 것
+                .antMatchers("/webjars/**" , "/script/**")
+                .mvcMatchers("/favicon.ico");
+>>>>>>> 14e32e099f39d280f9f270a5a9c92aec147c3426
+>>>>>>> bb1b0a094289d09f80c703abec24d4e696d7aa4f
     }
 
     @Override
@@ -159,8 +176,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         //Chat Test Templates 허용
         skipPathList.add("GET,/chat/**");
         skipPathList.add("POST,/chat/**");
+<<<<<<< HEAD
         skipPathList.add("GET,/chat/**");
         skipPathList.add("POST,/chat/**");
+=======
+<<<<<<< HEAD
+        skipPathList.add("GET,/chat/**");
+        skipPathList.add("POST,/chat/**");
+        skipPathList.add("GET,/ws-stomp/**");
+        skipPathList.add("POST,/ws-stomp/**");
+=======
+        skipPathList.add("GET,/ws-stomp/**");
+        skipPathList.add("POST,/ws-stomp/**");
+
+>>>>>>> 14e32e099f39d280f9f270a5a9c92aec147c3426
+>>>>>>> bb1b0a094289d09f80c703abec24d4e696d7aa4f
 
 
         FilterSkipMatcher matcher = new FilterSkipMatcher(
@@ -183,6 +213,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> bb1b0a094289d09f80c703abec24d4e696d7aa4f
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
