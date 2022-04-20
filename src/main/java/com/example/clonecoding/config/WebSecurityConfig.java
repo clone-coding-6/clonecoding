@@ -8,6 +8,7 @@ import com.example.clonecoding.security.filter.JwtAuthFilter;
 import com.example.clonecoding.security.jwt.HeaderTokenExtractor;
 import com.example.clonecoding.security.provider.FormLoginAuthProvider;
 import com.example.clonecoding.security.provider.JWTAuthProvider;
+import org.springframework.boot.autoconfigure.security.reactive.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -69,9 +70,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .ignoring()
                 .antMatchers("/h2-console/**")
                 .antMatchers("/auth/**")
-                .antMatchers("/css/**")
-                .antMatchers("/script/**");
-        //chat test 템플릿 허용 배포시 삭제할 것
+                //chat test 템플릿 허용 배포시 삭제할 것
+                .antMatchers("/webjars/**" , "/script/**")
+                .mvcMatchers("/favicon.ico");
     }
 
     @Override
@@ -81,7 +82,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll() // preflight 대응
-                .antMatchers("/auth/**").permitAll() // /auth/**에 대한 접근을 인증 절차 없이 허용(로그인 관련 url)
+                .antMatchers("/user/**").permitAll() // /auth/**에 대한 접근을 인증 절차 없이 허용(로그인 관련 url)
                 .antMatchers("/chat/**").permitAll();
         // 특정 권한을 가진 사용자만 접근을 허용해야 할 경우, 하기 항목을 통해 가능
                 //.antMatchers("/admin/**").hasAnyRole("ADMIN"
@@ -106,6 +107,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
 
         http.authorizeRequests()
+                .antMatchers(HttpMethod.OPTIONS, "**/*").permitAll() //preflight 에러용
                 // 회원 관리 처리 API 전부를 login 없이 허용
                 // 그 외 어떤 요청이든 '인증'
                 .anyRequest()
@@ -158,8 +160,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         //Chat Test Templates 허용
         skipPathList.add("GET,/chat/**");
         skipPathList.add("POST,/chat/**");
-        skipPathList.add("GET,/chat/**");
-        skipPathList.add("POST,/chat/**");
+        skipPathList.add("GET,/ws-stomp/**");
+        skipPathList.add("POST,/ws-stomp/**");
+
 
 
         FilterSkipMatcher matcher = new FilterSkipMatcher(
@@ -181,6 +184,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
+
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {

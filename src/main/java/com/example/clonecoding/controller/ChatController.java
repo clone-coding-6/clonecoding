@@ -19,10 +19,3 @@ public class ChatController {
         chatMessageService.joinMessage(message);
     }
 }
-
-//{
-//        "type":"ENTER",
-//        "roomId":"622fe8eb-69fc-41ab-bd14-a2849d2ae482",
-//        "sender":"유저 이름" ,
-//        "message":"as님이 입장하셨습다."
-//        }
