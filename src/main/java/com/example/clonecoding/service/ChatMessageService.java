@@ -18,6 +18,9 @@ public class ChatMessageService {
         if (MessageType.ENTER.equals(message.getType())) {
             chatRoomRepository.enterChatRoom(message.getRoomId());
             message.setMessage(message.getSender() + "님이 입장하셨습니다.");
+        } else if (MessageType.QUIT.equals(message.getType())) {
+            chatRoomRepository.enterChatRoom(message.getRoomId());
+            message.setMessage(message.getSender() + "님이 방에서 나가셨습니다.");
         }
         redisPublisher.publish(chatRoomRepository.getTopic(message.getRoomId()), message);
     }
