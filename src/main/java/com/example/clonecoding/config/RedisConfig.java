@@ -10,11 +10,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
 public class RedisConfig {
-<<<<<<< HEAD
     //merge를 위한 임시병합
-=======
-
->>>>>>> bb1b0a094289d09f80c703abec24d4e696d7aa4f
     //redis pub/sub 메시지를 처리하는 listener 설정
     @Bean
     public RedisMessageListenerContainer redisMessageListener(RedisConnectionFactory connectionFactory) {

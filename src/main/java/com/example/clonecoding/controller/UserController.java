@@ -2,10 +2,6 @@ package com.example.clonecoding.controller;
 
 import com.example.clonecoding.dto.*;
 import com.example.clonecoding.model.User;
-<<<<<<< HEAD
-=======
-import com.example.clonecoding.repository.UserRepository;
->>>>>>> bb1b0a094289d09f80c703abec24d4e696d7aa4f
 import com.example.clonecoding.security.UserDetailsImpl;
 import com.example.clonecoding.security.jwt.JwtTokenUtils;
 import com.example.clonecoding.service.UserService;
@@ -13,23 +9,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.HashMap;
-<<<<<<< HEAD
-=======
 import java.util.List;
->>>>>>> bb1b0a094289d09f80c703abec24d4e696d7aa4f
 import java.util.Map;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-<<<<<<< HEAD
-public class
-UserController {
-=======
 public class UserController {
->>>>>>> bb1b0a094289d09f80c703abec24d4e696d7aa4f
 
     private final UserService userService;
 
@@ -81,8 +68,6 @@ public class UserController {
     }
     // 비밀번호 찾기
 
-<<<<<<< HEAD
-=======
     //전체 회원정보 리스트 불러오기
     @GetMapping("/userlist")
     public List<User> getUserList(){
@@ -94,9 +79,6 @@ public class UserController {
     public List<User> getuser(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         return userService.getuser(userDetails);
     }
-
-
->>>>>>> bb1b0a094289d09f80c703abec24d4e696d7aa4f
 
 }
 
